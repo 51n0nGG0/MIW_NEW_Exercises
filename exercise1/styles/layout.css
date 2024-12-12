@@ -1,0 +1,92 @@
+body {
+    display: grid;
+    grid: auto auto auto auto / auto 1fr;
+    column-gap: 2vw;
+}
+
+header {
+    position:relative;
+    display: grid;
+    grid: auto auto / calc(max(140px,15vw) + 1rem) 1fr;
+    column-gap: 2vw;
+    row-gap: max(1rem, 2vw);
+    grid-row-start: 1;
+    grid-row-end: 2;
+    grid-column-start: 1;
+    grid-column-end: 3;
+}
+
+header img {
+    grid-row-start: 1;
+    grid-row-end: 3;
+    grid-column-start: 1;
+    grid-column-end: 2;
+}
+
+header h1 {
+    align-self: flex-end;
+}
+
+header p {
+    align-self: flex-start;
+}
+
+header div {
+    position: absolute;
+}
+
+aside {
+    position: sticky;
+    top:0;
+    grid-row-start: 2;
+    grid-row-end: 3;
+    grid-column-start: 1;
+    grid-column-end: 2;
+}
+
+aside h2 {
+    justify-self: center;
+}
+
+aside ul {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+aside li {
+    position: relative;
+}
+
+aside li img {
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+main {
+    grid-row-start: 2;
+    grid-row-end: 4;
+    grid-column-start: 2;
+    grid-column-end: 3;
+}
+
+article{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0 1.5rem;
+}
+
+section {
+    display:flex;
+    flex-direction: column;
+    flex: 1 1 0;
+}
+
+footer {
+    grid-row-start: 4;
+    grid-row-end: 5;
+    grid-column-start: 1;
+    grid-column-end: 3;
+}

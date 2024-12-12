@@ -1,0 +1,116 @@
+* {
+    font-family: "Montserrat", sans-serif;
+}
+
+body {
+    margin:0;
+}
+
+h2 {
+    background-color: black;
+    color: rgb(236, 236, 236);
+    font-weight: 400;
+    font-size: 1.3rem;
+    width: 100%;
+    padding-block: 0.5rem;
+    text-align: center;
+}
+
+header {
+    padding: 2vw;
+}
+
+header img {
+    width: max(140px,15vw);
+    height: auto;
+    border-radius: 50%;
+}
+
+header h1 {
+    margin-block: 0;
+    font-size: max(1rem, 2vw);
+}
+
+header p {
+    margin-block: 0;
+    font-size: max(1rem, 1vw);
+}
+
+header div {
+    background-color: black;
+    border-top-right-radius: calc(calc(max(140px,15vw) / 2) + 2rem);
+    border-bottom-right-radius: calc(calc(max(140px,15vw) / 2) + 2rem);
+    width: calc(2vw + max(140px,15vw) + 1rem);
+    height: calc(max(140px,15vw) + 2rem);
+    margin-block: calc(2vw - 1rem);
+    z-index: -1;
+}
+
+aside {
+    padding-left: 2vw;
+    width: calc(max(140px,15vw) + 1rem);
+}
+
+aside ul {
+    padding: 0;
+}
+
+aside li {
+    list-style-type: none;
+    text-align: center;
+    height: 4rem;
+    display: flex;
+}
+
+aside li img {
+    border: black 0.5rem solid;
+    border-radius: 50%;
+    padding: 0.5rem;
+    width: 2rem;
+    height: auto;
+    background-color: white;
+}
+
+aside li p {
+    background-color: black;
+    color: white;
+    flex: 1 1 0;
+    margin: 0;
+    align-self: center;
+    justify-content: center;
+    padding: 0.5rem;
+    margin-left: 2rem;
+    border-top-right-radius: 2rem;
+    border-bottom-right-radius: 2rem;
+}
+
+main {
+    padding-right: 2vw;
+}
+
+section {
+    border: rgb(255, 255, 255) 1px solid;
+    border-radius: 2rem;
+    background-color: rgb(20, 20, 20);
+    color: white;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
+
+section h3 {
+    margin: 0;
+}
+
+section img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+}
+
+section p {
+    margin: 0;
+}
