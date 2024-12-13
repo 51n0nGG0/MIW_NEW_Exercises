@@ -10,7 +10,7 @@ h2 {
     color: white;
     font-size: 2.5em;
     width: 100%;
-    background-color: #121213;
+    background-color: #0e1114;
     padding: 20px 20px 20px 50px;
     margin:0;
 }
@@ -19,7 +19,7 @@ h2:before {
     content: "";
     position: absolute;
     border: 5px solid rgba(255, 255, 255, 0.5);
-    box-shadow: 0 0 12px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.30.4);
     top: 20px;
     left: 20px;
     right: 20px;
@@ -99,12 +99,23 @@ section {
     width: 100%;
     margin: 0;
     perspective: 1200px;
-    background-image: url(../multimedia/images/background-1.jpg);
     transform-style: preserve-3d;
     transition: ease all 2.3s;
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
+}
+
+section:nth-of-type(1) {
+    background-image: url(../multimedia/images/background-1.jpg);
+}
+
+section:nth-of-type(2) {
+    background-image: url(../multimedia/images/background-3.jpg);
+}
+
+section:nth-of-type(3) {
+    background-image: url(../multimedia/images/background-4.jpg);
 }
 
 section:before {
@@ -167,7 +178,7 @@ section div {
     position: absolute;
     height: 100%;
     width: 100%;
-    background: #0b0f08;
+    background: #0e1114;
     transform-style: preserve-3d;
     transition: ease all 2.3s;
     transform: translateZ(-1px);
