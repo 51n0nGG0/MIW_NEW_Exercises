@@ -330,10 +330,24 @@ article:nth-of-type(3) section:after {
     z-index: 1;
 }
 
-article:nth-of-type(3) section svg {
+article:nth-of-type(3) section > svg:nth-of-type(1) {
     width: 30px;
     margin: auto 35px auto 35px;
     z-index: 2;
+}
+
+article:nth-of-type(3) section div {
+    display:flex;
+    flex-direction: row;
+    position: absolute;
+    right: 0;
+    width: calc(100% - 100px);
+    align-items: center;
+    justify-content: center;
+}
+
+article:nth-of-type(3) section div svg {
+    width: 30px;
 }
 
 article:nth-of-type(3) section h3 {
