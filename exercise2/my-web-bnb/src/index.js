@@ -7,6 +7,20 @@ import myContractManifest from "./contracts/MyContract.json";
 import { useState, useEffect, useRef } from 'react';
 
 function App(){
+  const myContract = useRef(null);
+  const [tickets, setTickets] = useState([]);
+
+  useEffect( () => {
+    initContracts();
+  }, [] )
+
+  let initContracts = async () => {
+    await configureBlockchain();
+    let ticketsFromBlockchain  = await myContract.current?.getTickets();
+    if (ticketsFromBlockchain != null)
+      setTickets(ticketsFromBlockchain)
+  }
+
   let configureBlockchain = async () => {
     try {
       let provider = await detectEthereumProvider();
@@ -17,15 +31,47 @@ function App(){
         provider = new ethers.providers.Web3Provider(provider);
         const signer = provider.getSigner();
 
+        myContract.current = new Contract(
+          '0x4869B4fBAF6ddF3Fc2313B1A4B53A0e0d34C3c40',
+          myContractManifest.abi,
+          signer
+        );
+
       }
     } catch (error) { }
   }
 
-  const tempContract = new Contract(
-    'COPIAR AQUI LA ADDRESS DE NUESTRO CONTRATO – como String',
-    myContractManifest.abi,
-    signer
-  );
+  let clickBuyTicket = async (i) => {
+    const tx = await myContract.current.buyTicket(i,{
+      value: ethers.utils.parseEther("0.02"),
+      gasLimit: 6721975,
+      gasPrice: 20000000000,
+
+    });
+    await tx.wait();
+
+    const ticketsUpdated = await myContract.current.getTickets();
+    setTickets(ticketsUpdated);
+  }
+
+  let withdrawBalance = async () => {
+    const tx = await myContract.current.transferBalanceToAdmin();
+  }
+
+  return (
+    <div>
+      <h1>Tickets store</h1>
+      <button onClick={() => withdrawBalance()}>Withdraw Balance</button>
+      <ul>
+        {tickets.map((address, i) =>
+          <li>Ticket {i} comprado por {address}
+          { address == ethers.constants.AddressZero && 
+                <a href="#" onClick={()=>clickBuyTicket(i)}> buy</a> }
+          </li>
+        )}
+      </ul>
+    </div>
+  )
 
 }
 
