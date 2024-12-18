@@ -8,6 +8,8 @@ import bankManifest from "./contracts/Bank.json";
 
 function App(){
     const bank = useRef(null);
+    const [balance, setBalance] = useState(0);
+    const [interest, setInterest] = useState(0);
 
     useEffect( () => {
         initContracts();
@@ -15,6 +17,15 @@ function App(){
 
     let initContracts = async () => {
         await getBlockchain();
+        let balanceFromBlockChain  = await bank.current?.getBalance();
+        if (balanceFromBlockChain != null) {
+            setBalance(parseFloat(balanceFromBlockChain))
+        }
+
+        let interestFromBlockChain  = await bank.current?.getInterest();
+        if (interestFromBlockChain != null) {
+            setInterest(parseFloat(interestFromBlockChain))
+        }
     }
 
     let getBlockchain = async () => {
@@ -27,7 +38,7 @@ function App(){
             const signer = provider.getSigner();
 
             bank.current = new Contract(
-              "0xCbeb6F69f780F3BDcaaBFa5cc9151bec138B82A7",
+              "0xAbd32D65FBb8B89C4D16D8C1989286437A29fF2D",
               bankManifest.abi,
               signer
            );
@@ -57,6 +68,8 @@ function App(){
     return (
         <div>
             <h1>Bank</h1>
+            <p>Balance: {balance/1e18} BNB</p>
+            <p>Interest: {interest/1e18} BMIW</p>
             <form onSubmit= { (e) => onSubmitDeposit(e) } >
                 <input type="number" step="0.01" />
                 <button type="submit">Deposit</button>
