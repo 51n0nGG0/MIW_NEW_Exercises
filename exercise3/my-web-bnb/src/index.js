@@ -38,7 +38,7 @@ function App(){
             const signer = provider.getSigner();
 
             bank.current = new Contract(
-              "0xAbd32D65FBb8B89C4D16D8C1989286437A29fF2D",
+              "0xe36493eB241281E0D668e1130a64F71B798c7ff5",
               bankManifest.abi,
               signer
            );
@@ -47,22 +47,30 @@ function App(){
     }
 
     let onSubmitDeposit = async (e) => {
-      e.preventDefault();
+        e.preventDefault();
+    
+        const BNBamount = parseFloat(e.target.elements[0].value);
+    
+        // Wei to BNB se pasa con ethers.utils recibe un String!!!
+        const tx = await bank.current.deposit({
+                value: ethers.utils.parseEther(String(BNBamount)),
+                gasLimit: 6721975,
+                gasPrice: 20000000000,
+        });
   
-      const BNBamount = parseFloat(e.target.elements[0].value);
-  
-      // Wei to BNB se pasa con ethers.utils recibe un String!!!
-      const tx = await bank.current.deposit({
-          value: ethers.utils.parseEther(String(BNBamount)),
-          gasLimit: 6721975,
-          gasPrice: 20000000000,
-      });
-  
-      await tx.wait();
+        await tx.wait();
     }
 
     let clickWithdraw = async (e) => {
-      await await bank.current.withdraw();
+
+        const tx = await bank.current.withdraw({
+            value: ethers.utils.parseEther("0.05"),
+            gasLimit: 6721975,
+            gasPrice: 20000000000,
+        });
+
+        await tx.wait();
+
     }
 
     return (
