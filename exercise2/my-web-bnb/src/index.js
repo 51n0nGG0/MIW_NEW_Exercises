@@ -58,10 +58,20 @@ function App(){
     const tx = await myContract.current.transferBalanceToAdmin();
   }
 
+  let changeAdmin = async (e) => {
+    e.preventDefault();
+    let newAdmin = e.target.elements.newadmin.value;
+    const tx = await myContract.current.changeAdmin(newAdmin);
+  }
+
   return (
     <div>
       <h1>Tickets store</h1>
       <button onClick={() => withdrawBalance()}>Withdraw Balance</button>
+      <form className="form-inline" onSubmit={ (e) => changeAdmin(e)}>
+        <input type="text" name="newadmin" placeholder='New Admin Address'/>
+        <button type="submit" > Change Admin </button>
+      </form>
       <ul>
         {tickets.map((address, i) =>
           <li>Ticket {i} comprado por {address}
