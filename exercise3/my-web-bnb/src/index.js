@@ -51,7 +51,7 @@ function App(){
             const signer = provider.getSigner();
 
             bank.current = new Contract(
-                "0x36FA976155fa9244D0ee93fA9243e5300bDC2D8c",
+                "0x41fBaA62047ac05c14BFfD5aD52b9E9f9B4E52d4",
                 bankManifest.abi,
                 signer
             );
