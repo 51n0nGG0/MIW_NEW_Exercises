@@ -11,6 +11,9 @@ function App(){
     const [balance, setBalance] = useState(0);
     const [interest, setInterest] = useState(0);
 
+    const [doubleBalance, setDoubleBalance] = useState(0);
+    const [doubleInterest, setDoubleInterest] = useState(0);
+
     useEffect( () => {
         initContracts();
     }, [])
@@ -26,6 +29,16 @@ function App(){
         if (interestFromBlockChain != null) {
             setInterest(parseFloat(interestFromBlockChain))
         }
+
+        let doubleBalanceFromBlockChain  = await bank.current?.getDoubleBalance();
+        if (doubleBalanceFromBlockChain != null) {
+            setDoubleBalance(parseFloat(doubleBalanceFromBlockChain))
+        }
+
+        let doubleInterestFromBlockChain  = await bank.current?.getDoubleInterest();
+        if (doubleInterestFromBlockChain != null) {
+            setDoubleInterest(parseFloat(doubleInterestFromBlockChain))
+        }
     }
 
     let getBlockchain = async () => {
@@ -38,10 +51,10 @@ function App(){
             const signer = provider.getSigner();
 
             bank.current = new Contract(
-              "0xe36493eB241281E0D668e1130a64F71B798c7ff5",
-              bankManifest.abi,
-              signer
-           );
+                "0x36FA976155fa9244D0ee93fA9243e5300bDC2D8c",
+                bankManifest.abi,
+                signer
+            );
         }
         return null;
     }
@@ -57,7 +70,7 @@ function App(){
                 gasLimit: 6721975,
                 gasPrice: 20000000000,
         });
-  
+
         await tx.wait();
     }
 
@@ -73,9 +86,29 @@ function App(){
 
     }
 
+    let onSubmitDepositDouble = async (e) => {
+        e.preventDefault();
+    
+        const BNBamount = parseFloat(e.target.elements[0].value);
+    
+        // Wei to BNB se pasa con ethers.utils recibe un String!!!
+        const tx = await bank.current.depositDouble({
+                value: ethers.utils.parseEther(String(BNBamount)),
+                gasLimit: 6721975,
+                gasPrice: 20000000000,
+        });
+
+        await tx.wait();
+    }
+
+    let clickWithdrawDouble = async (e) => {
+        await bank.current.withdrawDouble();
+    }
+
     return (
         <div>
             <h1>Bank</h1>
+            <h2>Normal Interest</h2>
             <p>Balance: {balance/1e18} BNB</p>
             <p>Interest: {interest/1e18} BMIW</p>
             <form onSubmit= { (e) => onSubmitDeposit(e) } >
@@ -83,6 +116,16 @@ function App(){
                 <button type="submit">Deposit</button>
             </form>
             <button onClick= { () => clickWithdraw() } > Withdraw </button>
+
+            <h2>Double Interest</h2>
+            <p>Balance: {doubleBalance/1e18} BNB</p>
+            <p>Interest: {doubleInterest/1e18} BMIW</p>
+            <form onSubmit= { (e) => onSubmitDepositDouble(e) } >
+                <input type="number" step="0.01" />
+                <button type="submit">Deposit</button>
+            </form>
+            <button onClick= { () => clickWithdrawDouble() } > Withdraw </button>
+
         </div>
     )
 }
