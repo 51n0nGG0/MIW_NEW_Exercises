@@ -9,10 +9,6 @@ header {
     grid: 1fr auto auto / calc(max(140px,20vw) + 1rem) 1fr;
     column-gap: 2vw;
     row-gap: max(1rem, 2vw);
-    grid-row-start: 1;
-    grid-row-end: 2;
-    grid-column-start: 1;
-    grid-column-end: 3;
 }
 
 header img {
@@ -26,10 +22,7 @@ header h1 {
     align-self: flex-end;
 }
 
-header p:nth-of-type(1) {
-    align-self: flex-start;
-}
-
+header p:nth-of-type(1),
 header p:nth-of-type(2) {
     align-self: flex-start;
 }
@@ -43,6 +36,8 @@ nav{
     flex-direction: row;
     color: white;
     justify-content: space-evenly;
+    position: sticky;
+    top:0;
 }
 
 nav p {
@@ -50,10 +45,6 @@ nav p {
 }
 
 main {
-    grid-row-start: 2;
-    grid-row-end: 4;
-    grid-column-start: 2;
-    grid-column-end: 3;
     display:flex;
     flex-direction: column;
     gap: 1.5rem;
@@ -64,7 +55,6 @@ article{
     flex-direction: column;
     flex-wrap: wrap;
     gap: 1.5rem;
-    position: relative;
 }
 
 article:nth-of-type(2) {
