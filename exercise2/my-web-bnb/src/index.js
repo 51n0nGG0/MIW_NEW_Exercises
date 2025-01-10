@@ -9,6 +9,8 @@ import { useState, useEffect, useRef } from 'react';
 function App(){
   const myContract = useRef(null);
   const [tickets, setTickets] = useState([]);
+  const [contractBalance, setContractBalance] = useState(0);
+  const [ticketsBalance, setTicketsBalance] = useState(0);
 
   useEffect( () => {
     initContracts();
@@ -19,6 +21,14 @@ function App(){
     let ticketsFromBlockchain  = await myContract.current?.getTickets();
     if (ticketsFromBlockchain != null)
       setTickets(ticketsFromBlockchain)
+
+    let contractBalanceFromBlockchain  = await myContract.current?.getContractBalance();
+    if (contractBalanceFromBlockchain != null)
+      setContractBalance(parseFloat(contractBalanceFromBlockchain))
+
+    let ticketsBalanceFromBlockchain  = await myContract.current?.getBalanceWei();
+    if (ticketsBalanceFromBlockchain != null)
+      setTicketsBalance(parseFloat(ticketsBalanceFromBlockchain))
   }
 
   let configureBlockchain = async () => {
@@ -32,7 +42,7 @@ function App(){
         const signer = provider.getSigner();
 
         myContract.current = new Contract(
-          '0x4869B4fBAF6ddF3Fc2313B1A4B53A0e0d34C3c40',
+          '0x39385E97Cd488Fe8952BE76F18087F071e62A319',
           myContractManifest.abi,
           signer
         );
@@ -52,6 +62,12 @@ function App(){
 
     const ticketsUpdated = await myContract.current.getTickets();
     setTickets(ticketsUpdated);
+
+    const contractBalanceUpdated = await myContract.current.getContractBalance();
+    setContractBalance(parseFloat(contractBalanceUpdated));
+
+    const ticketsBalanceUpdated = await myContract.current.getBalanceWei();
+    setTicketsBalance(parseFloat(ticketsBalanceUpdated));
   }
 
   let withdrawBalance = async () => {
@@ -67,6 +83,8 @@ function App(){
   return (
     <div>
       <h1>Tickets store</h1>
+      <p>Contract Balance: {contractBalance}</p>
+      <p>Tickets Balance: {ticketsBalance}</p>
       <button onClick={() => withdrawBalance()}>Withdraw Balance</button>
       <form className="form-inline" onSubmit={ (e) => changeAdmin(e)}>
         <input type="text" name="newadmin" placeholder='New Admin Address'/>
