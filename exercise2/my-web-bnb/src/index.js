@@ -11,10 +11,11 @@ function App(){
   const [tickets, setTickets] = useState([]);
   const [contractBalance, setContractBalance] = useState(0);
   const [ticketsBalance, setTicketsBalance] = useState(0);
+  const [balance, setBalance] = useState(0);
 
   useEffect( () => {
     initContracts();
-  }, [] )
+  }, [tickets] )
 
   let initContracts = async () => {
     await configureBlockchain();
@@ -47,8 +48,12 @@ function App(){
           signer
         );
 
+        setBalance(parseFloat(await provider.getBalance(await signer.getAddress())));
+        
       }
-    } catch (error) { }
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   let clickBuyTicket = async (i) => {
@@ -85,6 +90,7 @@ function App(){
       <h1>Tickets store</h1>
       <p>Contract Balance: {contractBalance}</p>
       <p>Tickets Balance: {ticketsBalance}</p>
+      <p>Balance: {balance} </p>
       <button onClick={() => withdrawBalance()}>Withdraw Balance</button>
       <form className="form-inline" onSubmit={ (e) => changeAdmin(e)}>
         <input type="text" name="newadmin" placeholder='New Admin Address'/>
