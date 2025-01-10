@@ -51,7 +51,7 @@ function App(){
             const signer = provider.getSigner();
 
             bank.current = new Contract(
-                "0x41fBaA62047ac05c14BFfD5aD52b9E9f9B4E52d4",
+                "0xbFb6AB5607fF307687911f8C2BaBd57916c68535",
                 bankManifest.abi,
                 signer
             );
@@ -105,6 +105,17 @@ function App(){
         await bank.current.withdrawDouble();
     }
 
+    let onSubmitBuyBMIW = async (e) => {
+
+        const BMIWamount = parseFloat(e.target.elements[0].value);
+
+        await bank.current.buyBMIW(BMIWamount,{
+            value: ethers.utils.parseEther(String(BMIWamount*0.001)),
+                gasLimit: 6721975,
+                gasPrice: 20000000000,
+        });
+    }
+    
     return (
         <div>
             <h1>Bank</h1>
@@ -125,7 +136,11 @@ function App(){
                 <button type="submit">Deposit</button>
             </form>
             <button onClick= { () => clickWithdrawDouble() } > Withdraw </button>
-
+            <h2>Buy BMIW</h2>
+            <form onSubmit={(e) => onSubmitBuyBMIW(e)}>
+                <input type="number" step="1" placeholder='Quantity of BMIW'/>
+                <button type="submit">Buy</button>
+            </form>
         </div>
     )
 }
